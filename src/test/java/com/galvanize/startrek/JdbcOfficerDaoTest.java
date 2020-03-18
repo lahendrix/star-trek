@@ -31,14 +31,14 @@ class JdbcOfficerDaoTest {
     @Test
     void countOfficers() {
         //Setup
-        String sql = "select * from officers";
+        String sql = "select count(*) from officers";
         List officers = new ArrayList<Officer>();
-        int expected = 5;
+        Integer expected = 5;
 
         for (int i = 0; i < expected; i++) {
             officers.add(new Officer(Rank.ADMIRAL, "testFirst" + i, "testLast" + i));
         }
-        when(jdbcTemplate.queryForList(sql, Officer.class)).thenReturn(officers);
+        when(jdbcTemplate.queryForObject(sql, Integer.class)).thenReturn(expected);
         // Exercise
 
         int actual = jdbcOfficerDao.count();
@@ -46,4 +46,5 @@ class JdbcOfficerDaoTest {
         // Assert
         assertEquals(expected, actual);
     }
+
 }

@@ -11,8 +11,8 @@ class JdbcOfficerDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int count() {
-        String sql = "select * from officers";
-        return jdbcTemplate.queryForList(sql, Officer.class).size();
+    public Integer count() {
+        String sql = "select count(*) from officers";
+        return jdbcTemplate.queryForObject(sql, Integer.class);
     }
 }
