@@ -47,4 +47,22 @@ class JdbcOfficerDaoTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void findAllOfficers () {
+        //Setup
+        String sql = "select * from officers";
+        List expectedOfficers = new ArrayList<Officer>();
+        Integer expected = 10;
+        for (int i = 0; i < expected; i++) {
+            expectedOfficers.add(new Officer(Rank.ADMIRAL, "testFirst" + i, "testLast" + i));
+        }
+        when(jdbcTemplate.queryForList(sql, Officer.class)).thenReturn(expectedOfficers);
+
+        // Exercise
+        List actualOfficers = jdbcOfficerDao.findAllOfficers();
+
+        // Assert
+        assertIterableEquals(expectedOfficers, actualOfficers);
+
+    }
 }
