@@ -2,7 +2,7 @@ package com.galvanize.startrek;
 
 import java.util.Objects;
 
-final class Officer {
+class Officer {
     private Long id;
     private Rank rank;
     private String first;
