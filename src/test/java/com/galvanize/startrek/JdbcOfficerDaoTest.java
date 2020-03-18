@@ -1,19 +1,19 @@
 package com.galvanize.startrek;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import static org.mockito.Mockito.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -64,5 +64,19 @@ class JdbcOfficerDaoTest {
         // Assert
         assertIterableEquals(expectedOfficers, actualOfficers);
 
+    }
+
+    @Test
+    void findOfficerById_whenIdDoesNotExist() {
+        //Setup
+        Long expectedId = 99L;
+        String sql = "select * from officers where id = " + expectedId;
+        Optional<Officer> expected = Optional.empty();
+
+        //Exercise
+        Optional<Officer> actual = jdbcOfficerDao.findOfficerById(expectedId);
+
+        // Assert
+        assertEquals(expected, actual);
     }
 }

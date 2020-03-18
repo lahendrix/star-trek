@@ -1,5 +1,7 @@
 package com.galvanize.startrek;
 
+import java.util.Objects;
+
 final class Officer {
     private Long id;
     private Rank rank;
@@ -61,5 +63,21 @@ final class Officer {
                 ", first='" + first + '\'' +
                 ", last='" + last + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Officer officer = (Officer) o;
+        return id.equals(officer.id) &&
+                rank == officer.rank &&
+                first.equals(officer.first) &&
+                last.equals(officer.last);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, rank, first, last);
     }
 }
