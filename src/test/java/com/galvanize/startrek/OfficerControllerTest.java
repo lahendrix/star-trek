@@ -26,8 +26,6 @@ class OfficerControllerTest {
     @MockBean
     OfficerService officerService;
 
-    @MockBean
-    OfficerRepository officerRepository;
 
     @Test // Zero case from ZOMBIES
     void getAllOfficers_whenNoOfficersExist_returnsEmpty() throws Exception{
@@ -42,7 +40,7 @@ class OfficerControllerTest {
                 .andExpect(jsonPath("$", hasSize(expected)));
     }
 
-    @Test
+    @Test // One Case from ZOMBIES
     void getAllOfficers_whenNoOfficersExist_returnsOfficers() throws Exception {
         //Setup
         List<Officer> expectedOfficers = getTestListOfOfficers(1);
@@ -52,7 +50,10 @@ class OfficerControllerTest {
         mockMvc.perform(get("/api/officers"))
                 .andDo((print()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(expectedOfficers.size())));
+                .andExpect(jsonPath("$", hasSize(expectedOfficers.size())))
+                .andExpect(jsonPath("$[0].rank").value(is(expectedOfficers.get(0).getRank().name())))
+                .andExpect(jsonPath("$[0].first").value(is(expectedOfficers.get(0).getFirst())))
+                .andExpect(jsonPath("$[0].last").value(is(expectedOfficers.get(0).getLast())));;
     }
 
     private List<Officer> getTestListOfOfficers(int numOfOfficers) {
