@@ -26,6 +26,9 @@ class OfficerControllerTest {
     @MockBean
     OfficerService officerService;
 
+    @MockBean
+    OfficerRepository officerRepository;
+
     @Test // Zero case from ZOMBIES
     void getAllOfficers_whenNoOfficersExist_returnsEmpty() throws Exception{
         // Setup
