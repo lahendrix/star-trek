@@ -15,6 +15,6 @@ class OfficerService {
     }
 
     List<Officer> getAllOfficers () {
-        return new ArrayList<>();
+        return officerRepository.findAll();
     }
 }
