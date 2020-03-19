@@ -1,8 +1,13 @@
 package com.galvanize.startrek;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "officers")
 class Officer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Rank rank;
     private String first;
