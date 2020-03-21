@@ -2,6 +2,7 @@ package com.galvanize.startrek;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.isNotNull;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -66,7 +68,7 @@ class OfficerControllerTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String newOfficerAsJson = objectMapper.writeValueAsString(newOfficer);
         newOfficer.setId(1L);
-        when(officerService.createOfficer(newOfficer)).thenReturn(newOfficer);
+        when(officerService.createOfficer(ArgumentMatchers.any(Officer.class))).thenReturn(newOfficer);
 
         // Exercise & Assert
         mockMvc.perform(post("/api/officers").content(newOfficerAsJson).contentType(MediaType.APPLICATION_JSON))

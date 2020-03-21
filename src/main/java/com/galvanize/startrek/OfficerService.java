@@ -19,6 +19,6 @@ class OfficerService {
     }
 
     Officer createOfficer(Officer officer) {
-        return officer;
+        return officerRepository.save(officer);
     }
 }
