@@ -9,8 +9,14 @@ class Officer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name="officer_rank")
     private Rank rank;
+
+    @Column
     private String first;
+
+    @Column
     private String last;
 
     public Officer() {}

@@ -8,10 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class OfficerServiceTest {
@@ -44,7 +40,7 @@ class OfficerServiceTest {
     }
 
     @Test
-    void getAllOfficers_whenNoOfficersExist_returnsOfficer() {
+    void getAllOfficers_whenOfficersExist_returnsOfficer() {
         // Setup
         Officer officer = new Officer(Rank.ADMIRAL, "Admiral", "Daffy");
         officerRepository.save(officer);
@@ -75,5 +71,8 @@ class OfficerServiceTest {
         assertEquals(officer.getRank(), savedOfficer.getRank());
         assertEquals(officer.getFirst(), savedOfficer.getFirst());
         assertEquals(officer.getLast(), savedOfficer.getLast());
+
+        //Teardown
+        officerRepository.deleteAll();
     }
 }
