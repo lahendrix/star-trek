@@ -1,15 +1,18 @@
 package com.galvanize.startrek;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.when;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -34,8 +37,8 @@ class OfficerControllerTest {
         when(officerService.getAllOfficers()).thenReturn(new ArrayList<>());
 
         // Exercise & Assert
-        mockMvc.perform(get("/api/officers"))
-                .andDo((print()))
+        mockMvc.perform(get("/api/officers").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(expected)));
     }
@@ -47,8 +50,8 @@ class OfficerControllerTest {
         when(officerService.getAllOfficers()).thenReturn(expectedOfficers);
 
         // Exercise & Assert
-        mockMvc.perform(get("/api/officers"))
-                .andDo((print()))
+        mockMvc.perform(get("/api/officers").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(expectedOfficers.size())))
                 .andExpect(jsonPath("$[0].rank").value(is(expectedOfficers.get(0).getRank().name())))
