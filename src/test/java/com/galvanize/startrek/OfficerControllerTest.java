@@ -59,6 +59,26 @@ class OfficerControllerTest {
                 .andExpect(jsonPath("$[0].last").value(is(expectedOfficers.get(0).getLast())));;
     }
 
+    @Test
+    void createOfficer_returnsOfficer() throws Exception {
+        // Setup
+        Officer newOfficer = new Officer(Rank.COMMANDER, "New", "Officer");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String newOfficerAsJson = objectMapper.writeValueAsString(newOfficer);
+        newOfficer.setId(1L);
+        when(officerService.createOfficer(newOfficer)).thenReturn(newOfficer);
+
+        // Exercise & Assert
+        mockMvc.perform(post("/api/officers").content(newOfficerAsJson).contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.rank").value(newOfficer.getRank().name()))
+                .andExpect(jsonPath("$.first").value(newOfficer.getFirst()))
+                .andExpect(jsonPath("$.last").value(newOfficer.getLast()));
+
+    }
+
     private List<Officer> getTestListOfOfficers(int numOfOfficers) {
         List<Officer> officers = new ArrayList<>();
         for (int i = 0; i < numOfOfficers; i++) {
