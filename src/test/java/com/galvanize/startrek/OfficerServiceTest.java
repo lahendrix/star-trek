@@ -61,4 +61,19 @@ class OfficerServiceTest {
         officerRepository.deleteAll();
 
     }
+
+    @Test
+    void createOfficer_returnsOfficer() {
+        // Setup
+        Officer officer = new Officer(Rank.ADMIRAL, "Admiral", "Daffy");
+
+        //Exercise
+        Officer savedOfficer = officerService.createOfficer(officer);
+
+        // Assert
+        assertNotNull(savedOfficer.getId());
+        assertEquals(officer.getRank(), savedOfficer.getRank());
+        assertEquals(officer.getFirst(), savedOfficer.getFirst());
+        assertEquals(officer.getLast(), savedOfficer.getLast());
+    }
 }
