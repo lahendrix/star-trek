@@ -46,7 +46,6 @@ class OfficerServiceTest {
     @Test
     void getAllOfficers_whenNoOfficersExist_returnsOfficer() {
         // Setup
-        OfficerService officerService = new OfficerService(officerRepository);
         Officer officer = new Officer(Rank.ADMIRAL, "Admiral", "Daffy");
         officerRepository.save(officer);
         int expected = 1;
