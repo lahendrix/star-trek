@@ -1,6 +1,7 @@
 package com.galvanize.startrek;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +20,12 @@ class OfficerController {
     }
 
     @GetMapping
-    List<Officer> getAllOfficers() {
-        return officerService.getAllOfficers();
+    ResponseEntity<List<Officer>> getAllOfficers() {
+        return ResponseEntity.ok(officerService.getAllOfficers());
     }
 
     @PostMapping
-    Officer createOfficer(Officer officer) {
-        return officerService.createOfficer(officer);
+    ResponseEntity<Officer> createOfficer(Officer officer) {
+        return ResponseEntity.ok(officerService.createOfficer(officer));
     }
 }
